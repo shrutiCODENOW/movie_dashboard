@@ -53,26 +53,26 @@
 
 // export default App;
 
-import React from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import MovieList from './MovieList';
-//import MovieDetails from './MovieDetails';
+// import React from 'react';
+// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+// import MovieList from './MovieList';
+// //import MovieDetails from './MovieDetails';
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <div>
-        <h1>Movie Dashboard</h1>
-        <MovieList />
+// function App() {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <div>
+//         <h1>Movie Dashboard</h1>
+//         <MovieList />
         
-      </div>
-    </QueryClientProvider>
-  );
-}
+//       </div>
+//     </QueryClientProvider>
+//   );
+// }
 
-export default App;
+// export default App;
 
 // import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import { Provider } from 'react-redux';
@@ -116,3 +116,35 @@ export default App;
 // };
 
 // export default App;
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import MovieList from './MovieList'; // Movie list component
+import MovieDetails from './MovieDetails'; // Movie details component
+
+// Create Query Client
+const queryClient = new QueryClient();
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <div>
+          <h1>Movie Dashboard</h1>
+
+          {/* Define Routes */}
+          <Routes>
+            {/* Default route for Movie List */}
+            <Route path="/" element={<MovieList />} />
+
+            {/* Dynamic route for Movie Details */}
+            <Route path="/movie/:id" element={<MovieDetails />} />
+          </Routes>
+        </div>
+      </Router>
+    </QueryClientProvider>
+  );
+}
+
+export default App;
