@@ -42,7 +42,7 @@ const BackButton = styled.button`
   display: inline-block;
   position:absolute;
   right:50px;
-  top:10px;
+  top:100px;
   margin-top: 20px;
   padding: 10px 20px;
   background: ${(props) => props.theme.buttonBg};
