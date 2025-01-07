@@ -549,109 +549,109 @@
 
 // export default MovieList;
 
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setQuery, setPage } from './movieSlice';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMovies } from './MovieApi';
-import { Link } from 'react-router-dom';
-import Pagination from './Pagination';
-import styled from 'styled-components';
-import SearchBar from './SearchBar';
+// import React, { useState, useEffect } from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { setQuery, setPage } from './movieSlice';
+// import { useQuery } from '@tanstack/react-query';
+// import { fetchMovies } from './MovieApi';
+// import { Link } from 'react-router-dom';
+// import Pagination from './Pagination';
+// import styled from 'styled-components';
+// import SearchBar from './SearchBar';
 
-// Styled Components
-const Container = styled.div`
-  padding: 20px;
-`;
+// // Styled Components
+// const Container = styled.div`
+//   padding: 20px;
+// `;
 
-const MovieGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-`;
+// const MovieGrid = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+//   gap: 15px;
+// `;
 
-const MovieCard = styled.div`
-  background: ${(props) => props.theme.cardBg};
-  color: ${(props) => props.theme.text};
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
+// const MovieCard = styled.div`
+//   background: ${(props) => props.theme.cardBg};
+//   color: ${(props) => props.theme.text};
+//   padding: 10px;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   text-align: center;
 
-  img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-`;
+//   img {
+//     width: 100%;
+//     height: 300px;
+//     object-fit: cover;
+//     border-radius: 5px;
+//   }
+// `;
 
-const MovieList = () => {
-  const dispatch = useDispatch();
-  const query = useSelector((state) => state.movies.query);
-  const page = useSelector((state) => state.movies.page);
+// const MovieList = () => {
+//   const dispatch = useDispatch();
+//   const query = useSelector((state) => state.movies.query);
+//   const page = useSelector((state) => state.movies.page);
 
-  const randomKeywords = ['action', 'love', 'war', 'comedy', 'drama', 'horror'];
+//   const randomKeywords = ['action', 'love', 'war', 'comedy', 'drama', 'horror'];
 
-  const [searchQuery, setSearchQuery] = useState('');
+//   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    if (!query) {
-      const randomQuery = randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
-      dispatch(setQuery(randomQuery));
-    }
-  }, [dispatch, query]);
+//   useEffect(() => {
+//     if (!query) {
+//       const randomQuery = randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
+//       dispatch(setQuery(randomQuery));
+//     }
+//   }, [dispatch, query]);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['movies', query, page],
-    queryFn: () => fetchMovies(query, page),
-    enabled: !!query,
-    keepPreviousData: true,
-  });
+//   const { data, isLoading, error } = useQuery({
+//     queryKey: ['movies', query, page],
+//     queryFn: () => fetchMovies(query, page),
+//     enabled: !!query,
+//     keepPreviousData: true,
+//   });
 
-  const handleSearch = () => {
-    if (searchQuery) {
-      dispatch(setQuery(searchQuery));
-    } else {
-      const randomQuery = randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
-      dispatch(setQuery(randomQuery)); // Trigger random search when search bar is empty
-    }
-  };
+//   const handleSearch = () => {
+//     if (searchQuery) {
+//       dispatch(setQuery(searchQuery));
+//     } else {
+//       const randomQuery = randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
+//       dispatch(setQuery(randomQuery)); // Trigger random search when search bar is empty
+//     }
+//   };
 
-  const handlePageChange = (newPage) => {
-    dispatch(setPage(newPage));
-  };
+//   const handlePageChange = (newPage) => {
+//     dispatch(setPage(newPage));
+//   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching movies!</div>;
-  if (!data?.Search) return <div>No results found.</div>;
+//   if (isLoading) return <div>Loading...</div>;
+//   if (error) return <div>Error fetching movies!</div>;
+//   if (!data?.Search) return <div>No results found.</div>;
 
-  return (
-    <Container>
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
+//   return (
+//     <Container>
+//       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
 
-      <MovieGrid>
-        {data.Search.map((movie) => (
-          <Link to={`/movie/${movie.imdbID}`} key={movie.imdbID}>
-            <MovieCard>
-              <img src={movie.Poster} alt={movie.Title} />
-              <h3>{movie.Title}</h3>
-              <p>{movie.Year}</p>
-            </MovieCard>
-          </Link>
-        ))}
-      </MovieGrid>
+//       <MovieGrid>
+//         {data.Search.map((movie) => (
+//           <Link to={`/movie/${movie.imdbID}`} key={movie.imdbID}>
+//             <MovieCard>
+//               <img src={movie.Poster} alt={movie.Title} />
+//               <h3>{movie.Title}</h3>
+//               <p>{movie.Year}</p>
+//             </MovieCard>
+//           </Link>
+//         ))}
+//       </MovieGrid>
 
-      <Pagination
-        currentPage={page}
-        totalPages={Math.ceil(data.totalResults / 10)}
-        onPageChange={handlePageChange}
-      />
-    </Container>
-  );
-};
+//       <Pagination
+//         currentPage={page}
+//         totalPages={Math.ceil(data.totalResults / 10)}
+//         onPageChange={handlePageChange}
+//       />
+//     </Container>
+//   );
+// };
 
-export default MovieList;
+// export default MovieList;
 
 // import React, { useEffect, useState } from 'react';
 // import { useSelector, useDispatch } from 'react-redux';
@@ -903,3 +903,369 @@ export default MovieList;
 // };
 
 // export default MovieList;
+
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setQuery, setPage } from './movieSlice';
+import { useQuery } from '@tanstack/react-query';
+import { fetchMovies } from './MovieApi';
+import { Link } from 'react-router-dom';
+import Pagination from './Pagination';
+import styled from 'styled-components';
+import SearchBar from './SearchBar';
+import Filter from './FilterComponent'; // Import the Filter component
+import SortComponent from './SortComponent';
+
+// Styled Components
+// const Container = styled.div`
+//   padding: 20px;
+// `;
+
+// const MovieGrid = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+//   gap: 15px;
+// `;
+
+// const MovieCard = styled.div`
+//   background: ${(props) => props.theme.cardBg};
+//   color: ${(props) => props.theme.text};
+//   padding: 10px;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   text-align: center;
+
+//   img {
+//     width: 100%;
+//     height: 300px;
+//     object-fit: cover;
+//     border-radius: 5px;
+//   }
+// `;
+
+// const MovieList = () => {
+//   const dispatch = useDispatch();
+//   const query = useSelector((state) => state.movies.query);
+//   const page = useSelector((state) => state.movies.page);
+
+//   const randomKeywords = ['action', 'love', 'war', 'comedy', 'drama', 'horror'];
+
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [filterGenre, setFilterGenre] = useState(''); // For genre filter
+
+//   useEffect(() => {
+//     if (!query) {
+//       const randomQuery = randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
+//       dispatch(setQuery(randomQuery));
+//     }
+//   }, [dispatch, query]);
+
+//   const { data, isLoading, error } = useQuery({
+//     queryKey: ['movies', query, page, filterGenre], // Include filterGenre in queryKey
+//     queryFn: () => fetchMovies(query, page, filterGenre), // Pass filterGenre to API call
+//     enabled: !!query,
+//     keepPreviousData: true,
+//   });
+
+//   const handleSearch = () => {
+//     if (searchQuery) {
+//       dispatch(setQuery(searchQuery));
+//     } else {
+//       const randomQuery = randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
+//       dispatch(setQuery(randomQuery)); // Trigger random search when search bar is empty
+//     }
+//   };
+
+//   const handlePageChange = (newPage) => {
+//     dispatch(setPage(newPage));
+//   };
+
+//   // Handling Filter change
+//   const handleFilter = (genre) => {
+//     setFilterGenre(genre); // Update filter genre
+//   };
+
+//   if (isLoading) return <div>Loading...</div>;
+//   if (error) return <div>Error fetching movies!</div>;
+//   if (!data?.Search) return <div>No results found.</div>;
+
+//   return (
+//     <Container>
+//       {/* Search Bar and Filter */}
+//       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
+//       <Filter onFilter={handleFilter} /> {/* Integrate Filter Component */}
+
+//       <MovieGrid>
+//         {data.Search.map((movie) => (
+//           <Link to={`/movie/${movie.imdbID}`} key={movie.imdbID}>
+//             <MovieCard>
+//               <img src={movie.Poster} alt={movie.Title} />
+//               <h3>{movie.Title}</h3>
+//               <p>{movie.Year}</p>
+//             </MovieCard>
+//           </Link>
+//         ))}
+//       </MovieGrid>
+
+//       <Pagination
+//         currentPage={page}
+//         totalPages={Math.ceil(data.totalResults / 10)}
+//         onPageChange={handlePageChange}
+//       />
+//     </Container>
+//   );
+// };
+
+// export default MovieList;
+
+// const Container = styled.div`
+//   padding: 20px;
+// `;
+
+// const MovieGrid = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+//   gap: 15px;
+// `;
+
+// const MovieCard = styled.div`
+//   background: ${(props) => props.theme.cardBg};
+//   color: ${(props) => props.theme.text};
+//   padding: 10px;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//   text-align: center;
+
+//   img {
+//     width: 100%;
+//     height: 300px;
+//     object-fit: cover;
+//     border-radius: 5px;
+//   }
+// `;
+
+// const MovieList = () => {
+//   const dispatch = useDispatch();
+//   const query = useSelector((state) => state.movies.query);
+//   const page = useSelector((state) => state.movies.page);
+
+//   const [filterGenre, setFilterGenre] = useState('All');  // Genre filter state
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [sortCriteria, setSortCriteria] = useState('rating'); // Sorting criteria state (either 'rating' or 'year')
+
+//   useEffect(() => {
+//     if (!query) {
+//       dispatch(setQuery('random'));  // Set random query if no query is set
+//     }
+//   }, [dispatch, query]);
+
+//   // Fetch movies using React Query, apply genre filter
+//   const { data, isLoading, error } = useQuery({
+//     queryKey: ['movies', query, page, filterGenre, sortCriteria],  // Add sortCriteria to the queryKey
+//     queryFn: () => fetchMovies(query, page, filterGenre),  // Pass genre as argument
+//     enabled: !!query,  // Ensure query is only fired when query is present
+//     keepPreviousData: true,  // Keeps old data when switching pages or filters
+//   });
+
+//   // Handle search functionality
+//   const handleSearch = () => {
+//     if (searchQuery) {
+//       dispatch(setQuery(searchQuery));  // Set search query
+//     } else {
+//       dispatch(setQuery('random'));  // Trigger random search if empty
+//     }
+//   };
+
+//   // Handle page change functionality
+//   const handlePageChange = (newPage) => {
+//     dispatch(setPage(newPage));  // Set the new page
+//   };
+
+//   // Handle filter functionality
+//   const handleFilter = (genre) => {
+//     setFilterGenre(genre);  // Update filter genre and trigger query refetch
+//   };
+
+//   // Handle sorting functionality from SortComponent
+//   const handleSortChange = (criteria) => {
+//     setSortCriteria(criteria);  // Update sort criteria (either 'rating' or 'year')
+//   };
+
+//   // Sort the movies based on selected criteria
+//   const sortedMovies = data?.Search?.sort((a, b) => {
+//     if (sortCriteria === 'rating') {
+//       return parseFloat(b.imdbRating) - parseFloat(a.imdbRating);  // Sort by IMDb rating
+//     }
+//     if (sortCriteria === 'year') {
+//       return parseInt(b.Year) - parseInt(a.Year);  // Sort by release year
+//     }
+//     return 0;  // No sorting if criteria is invalid
+//   });
+
+//   if (isLoading) return <div>Loading...</div>;
+//   if (error) return <div>Error fetching movies!</div>;
+//   if (!data?.Search) return <div>No movies found for this genre.</div>;
+
+//   return (
+//     <Container>
+//       {/* Search bar and filter */}
+//       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
+//       <Filter onFilter={handleFilter} />  {/* Integrating the Filter component */}
+      
+//       {/* Sort Component */}
+//       <SortComponent onSortChange={handleSortChange} />
+
+//       {/* Movie Grid */}
+//       <MovieGrid>
+//         {sortedMovies.map((movie) => (
+//           <Link to={`/movie/${movie.imdbID}`} key={movie.imdbID}>
+//             <MovieCard>
+//               <img src={movie.Poster} alt={movie.Title} />
+//               <h3>{movie.Title}</h3>
+//               <p>{movie.Year}</p>
+//               <p>{sortCriteria === 'rating' ? `Rating: ${movie.imdbRating}` : `Year: ${movie.Year}`}</p>
+//             </MovieCard>
+//           </Link>
+//         ))}
+//       </MovieGrid>
+
+//       {/* Pagination */}
+//       <Pagination
+//         currentPage={page}
+//         totalPages={Math.ceil(data.totalResults / 10)}
+//         onPageChange={handlePageChange}  // Trigger page change
+//       />
+//     </Container>
+//   );
+// };
+
+// export default MovieList;
+
+const Container = styled.div`
+  padding: 20px;
+`;
+
+const MovieGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+`;
+
+const MovieCard = styled.div`
+  background: ${(props) => props.theme.cardBg};
+  color: ${(props) => props.theme.text};
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+`;
+
+const MovieList = () => {
+  const dispatch = useDispatch();
+  const query = useSelector((state) => state.movies.query);
+  const page = useSelector((state) => state.movies.page);
+
+  const [filterGenre, setFilterGenre] = useState('All');  // Genre filter state
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortCriteria, setSortCriteria] = useState('rating'); // Sorting criteria state (either 'rating' or 'year')
+
+  useEffect(() => {
+    if (!query) {
+      dispatch(setQuery('random'));  // Set random query if no query is set
+    }
+  }, [dispatch, query]);
+
+  // Fetch movies using React Query, apply genre filter
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['movies', query, page, filterGenre, sortCriteria],  // Add sortCriteria to the queryKey
+    queryFn: () => fetchMovies(query, page, filterGenre),  // Pass genre as argument
+    enabled: !!query,  // Ensure query is only fired when query is present
+    keepPreviousData: true,  // Keeps old data when switching pages or filters
+  });
+
+  // Handle search functionality
+  const handleSearch = () => {
+    if (searchQuery) {
+      dispatch(setQuery(searchQuery));  // Set search query
+    } else {
+      dispatch(setQuery('random'));  // Trigger random search if empty
+    }
+  };
+
+  // Handle page change functionality
+  const handlePageChange = (newPage) => {
+    dispatch(setPage(newPage));  // Set the new page
+  };
+
+  // Handle filter functionality
+  const handleFilter = (genre) => {
+    setFilterGenre(genre);  // Update filter genre and trigger query refetch
+  };
+
+  // Handle sorting functionality from SortComponent
+  const handleSortChange = (criteria) => {
+    setSortCriteria(criteria);  // Update sort criteria (either 'rating' or 'year')
+  };
+
+  // Sort the movies based on selected criteria
+  const sortedMovies = data?.Search?.sort((a, b) => {
+    console.log(a);
+    if (sortCriteria === 'rating') {
+      // Safely handle missing or invalid ratings
+      const ratingA = parseFloat(a.imdbRating) || 0;
+      const ratingB = parseFloat(b.imdbRating) || 0;
+      console.log(ratingA);
+      console.log(ratingB)
+      return ratingB - ratingA;  // Sort by IMDb rating (descending)
+    }
+    if (sortCriteria === 'year') {
+      return parseInt(b.Year) - parseInt(a.Year);  // Sort by release year (descending)
+    }
+    return 0;  // No sorting if criteria is invalid
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching movies!</div>;
+  if (!data?.Search) return <div>No movies found for this genre.</div>;
+
+  return (
+    <Container>
+      {/* Search bar and filter */}
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
+      <Filter onFilter={handleFilter} />  {/* Integrating the Filter component */}
+      
+      {/* Sort Component */}
+      <SortComponent onSortChange={handleSortChange} />
+
+      {/* Movie Grid */}
+      <MovieGrid>
+        {sortedMovies.map((movie) => (
+          <Link to={`/movie/${movie.imdbID}`} key={movie.imdbID}>
+            <MovieCard>
+              <img src={movie.Poster} alt={movie.Title} />
+              <h3>{movie.Title}</h3>
+              <p>{movie.Year}</p>
+              <p>{sortCriteria === 'rating' ? `Rating: ${movie.imdbRating}` : `Year: ${movie.Year}`}</p>
+            </MovieCard>
+          </Link>
+        ))}
+      </MovieGrid>
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={page}
+        totalPages={Math.ceil(data.totalResults / 10)}
+        onPageChange={handlePageChange}  // Trigger page change
+      />
+    </Container>
+  );
+};
+
+export default MovieList;
