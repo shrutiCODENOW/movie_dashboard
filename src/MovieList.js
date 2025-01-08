@@ -1219,8 +1219,10 @@ const MovieList = () => {
     console.log(a);
     if (sortCriteria === 'rating') {
       // Safely handle missing or invalid ratings
-      const ratingA = parseFloat(a.imdbRating) || 0;
-      const ratingB = parseFloat(b.imdbRating) || 0;
+    //   const ratingA = parseFloat(a.imdbRating) || 0;
+    //   const ratingB = parseFloat(b.imdbRating) || 0;
+    const ratingA =a.Ratings?a.Ratings[0]?.Value:null;
+    const ratingB=b.Ratings?b.Ratings[0]?.Value:null;
       console.log(ratingA);
       console.log(ratingB)
       return ratingB - ratingA;  // Sort by IMDb rating (descending)
