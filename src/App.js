@@ -117,19 +117,22 @@
 
 // export default App;
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { ThemeContext } from './ThemeContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from './GlobalStyles';
 import MovieList from './MovieList'; // Movie list component
 import MovieDetails from './MovieDetails'; // Movie details component
+import { ThemeProviderComponent, useTheme } from './ThemeContext';
 import NavigationBar from './NavigationBar';
 
 // Create Query Client
 const queryClient = new QueryClient();
-const theme={
-  primary:"007bff",
+const lightTheme={
+  //primary:"007bff",
+  primary:"#283747",
   cardBg:"#fff",
   text:'#333',
   inputBorder:"#ccc",
@@ -137,32 +140,142 @@ const theme={
   primaryHover:"0056b3",
   background:"#f4f4f4",
   navBg:"#283747 ",
-  navText:"white"
+  navText:"white",
+  bodyBg:"#ffffff",
+  linkTextDecoration: 'none',
 }
 
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-      <Router>
-        <NavigationBar/>
-        <div>
+// function App() {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <ThemeProviderComponent>
+//       <ThemeProvider theme={theme}>
+//         {/* <GlobalStyles/> */}
+//       <Router>
+//         <NavigationBar/>
+//         <div>
           
 
-          {/* Define Routes */}
-          <Routes>
-            {/* Default route for Movie List */}
-            <Route path="/" element={<MovieList />} />
+//           {/* Define Routes */}
+//           <Routes>
+//             {/* Default route for Movie List */}
+//             <Route path="/" element={<MovieList />} />
 
-            {/* Dynamic route for Movie Details */}
+//             {/* Dynamic route for Movie Details */}
+//             <Route path="/movie/:id" element={<MovieDetails />} />
+//           </Routes>
+//         </div>
+//       </Router>
+//       </ThemeProvider>
+//       </ThemeProviderComponent>
+//     </QueryClientProvider>
+    
+//   );
+// }
+
+// export default App;
+
+// const darkTheme = {
+//   primary: '#1d1d1d',
+//   cardBg: '#333',
+//   text: '#fff',
+//   inputBorder: '#555',
+//   primaryHover: '#555',
+//   background: '#121212',
+//   navBg: '#1a1a1a',
+//   navText: '#fff',
+// };
+
+// function App() {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <ThemeProviderComponent>
+//         <ThemeProvider theme={theme}>
+//         <GlobalStyles />
+//         <Router>
+//           <NavigationBar />
+//           <div>
+//             <Routes>
+//               <Route path="/" element={<MovieList />} />
+//               <Route path="/movie/:id" element={<MovieDetails />} />
+//             </Routes>
+//           </div>
+//         </Router>
+//         </ThemeProvider>
+//       </ThemeProviderComponent>
+//     </QueryClientProvider>
+//   );
+// }
+
+// export default App;
+
+const darkTheme = {
+  primary: '#1d1d1d',
+  cardBg: '#333',
+  text: '#fff',
+  inputBorder: '#555',
+  primaryHover: '#555',
+  background: '#121212',
+  navBg: '#1a1a1a',
+  navText: '#fff',
+  bodyBg:'#71797E'
+};
+
+// function ThemedApp() {
+//   const { theme } = useTheme(); // Use the current theme from context
+
+//   return (
+//     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+//       <Router>
+//         <NavigationBar />
+//         <Routes>
+//           <Route path="/" element={<MovieList />} />
+//           <Route path="/movie/:id" element={<MovieDetails />} />
+//         </Routes>
+//       </Router>
+//     </ThemeProvider>
+//   );
+// }
+
+// function App() {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <ThemeProviderComponent>
+//         <ThemedApp />
+//       </ThemeProviderComponent>
+//     </QueryClientProvider>
+//   );
+// }
+
+// export default App;
+function App() {
+  const [theme, setTheme] = useState('light'); // State for theme
+
+const toggleTheme = () => {
+  setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+};
+
+useEffect(() => {
+  const body = document.body;
+  const currentTheme = theme === 'light' ? lightTheme : darkTheme;
+  body.style.backgroundColor = currentTheme.bodyBg;
+}, [theme]); // Dependency on theme to reapply whenever it changes
+
+return (
+  <QueryClientProvider client={queryClient}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+        <Router>
+          <NavigationBar />
+          <Routes>
+            <Route path="/" element={<MovieList />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
           </Routes>
-        </div>
-      </Router>
+        </Router>
       </ThemeProvider>
-    </QueryClientProvider>
-    
-  );
+    </ThemeContext.Provider>
+  </QueryClientProvider>
+);
 }
 
 export default App;

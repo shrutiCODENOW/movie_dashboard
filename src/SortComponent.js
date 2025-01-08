@@ -16,14 +16,14 @@ const SortButton = styled.button`
   height:40px;
   width:80px;
   background-color: ${(props) => props.theme.primary};
-  color: 34495E;
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 14px;
 
   &:hover {
     background-color: ${(props) => props.theme.primaryHover};
@@ -76,6 +76,7 @@ const SortComponent = ({ onSortChange }) => {
         <SortOptions>
           <SortOption onClick={() => handleSortOptionClick('rating')}>By Rating</SortOption>
           <SortOption onClick={() => handleSortOptionClick('year')}>By Year</SortOption>
+          
         </SortOptions>
       )}
     </SortContainer>

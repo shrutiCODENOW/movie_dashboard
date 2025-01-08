@@ -8,8 +8,10 @@ const PaginationContainer = styled.div`
 `;
 
 const PageButton = styled.button`
-  background-color: ${(props) => props.theme.buttonBg};
-  color: ${(props) => props.theme.text};
+//   background-color: ${(props) => props.theme.buttonBg};
+//   color: ${(props) => props.theme.text};
+  background-color: ${(props) => props.theme.primary};
+  color: white;
   padding: 10px 15px;
   margin: 0 5px;
   border: none;
@@ -17,7 +19,7 @@ const PageButton = styled.button`
   cursor: pointer;
 
   &:disabled {
-    background-color: #ccc;
+    background-color: #B2BEB5;
     cursor: not-allowed;
   }
 `;

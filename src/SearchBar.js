@@ -61,11 +61,13 @@ const SearchInput = styled.input`
 const SearchButton = styled.button`
   padding: 10px 15px;
   background-color: ${(props) => props.theme.primary};
-  color: 34495E;
+  //color: 34495E;
+  color:white;
   border: none;
   border-radius: 8px;
   margin-left: 10px;
   cursor: pointer;
+  
 
   &:hover {
     background-color: ${(props) => props.theme.primaryHover};
