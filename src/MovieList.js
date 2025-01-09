@@ -912,9 +912,9 @@ import { fetchMovies, fetchMovieDetails } from './MovieApi';
 import { Link } from 'react-router-dom';
 import Pagination from './Pagination';
 import styled, {keyframes} from 'styled-components';
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBar';//Import Search Component
 import Filter from './FilterComponent'; // Import the Filter component
-import SortComponent from './SortComponent';
+import SortComponent from './SortComponent';//Import sort component
 
 
 
@@ -944,7 +944,9 @@ const NoMoviesFound = styled.div`
   text-align: center;
   margin-top: 50px;
   font-size: 20px;
-  color: ${(props) => props.theme.text};
+  font-weight:bold;
+  //color: ${(props) => props.theme.text};
+  color:red;
 `;
 const Spinner = styled.div`
   width: 50px;
@@ -1003,18 +1005,7 @@ const MovieCard = styled.div`
     text-decoration:none;
     box-shadow:0 8px 12px rgba(0,123,255,0.4);
   }
-
   
-
-  h3,p{
-   
-   text-decoration: none;
-   margin:10px,0;
-  }
-   a
-   {
-    text-decoration:none;
-   }
 `;
 
 const MovieList = () => {
@@ -1028,11 +1019,21 @@ const MovieList = () => {
   const[isAscending, setIsAscending]=useState(true);
 
   //const[isMoviesLoaded, setIsMovieLoaded]=useState(false);
+//   useEffect(() => {
+//     if (!query) {
+//       dispatch(setQuery('random'));
+//     }
+//   }, [dispatch, query]);
+
+//Generates random movies when page is loaded
+const randomKeywords = ['action', 'love', 'war', 'comedy', 'drama', 'horror'];
+
   useEffect(() => {
     if (!query) {
-      dispatch(setQuery('random'));
+      const randomQuery = randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
+      dispatch(setQuery(randomQuery));
     }
-  }, [dispatch, query]);
+  }, [dispatch, query, randomKeywords]);
 
   // Fetch movies
   const { data, isLoading, error } = useQuery({
@@ -1042,6 +1043,7 @@ const MovieList = () => {
     keepPreviousData: true,
   });
 
+  //Fetching for genre and IMDB rating
   const fetchGenresForMovies = async (movies) => {
     const movieDetails = await Promise.all(
       movies.map(async (movie) => {
@@ -1117,7 +1119,7 @@ if (!data?.Search) return <NoMoviesFound>NO MOVIES FOUND.</NoMoviesFound>;
       <SortComponent onSortChange={handleSortChange}  />
       {/* <SortComponent onSortChange={handleSortChange} 
       isAscending={isAscending} 
-      toggleSortOrder={toggleSortOrder} /> */}
+      onToggleOrder={toggleSortOrder} /> */}
 
       
 

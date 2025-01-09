@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaSort, FaArrowUp, FaArrowDown } from 'react-icons/fa';  // Sorting icon
+import { FaSort} from 'react-icons/fa';  // Sorting icon
 import styled from 'styled-components';
 
 const SortContainer = styled.div`
@@ -10,6 +10,8 @@ const SortContainer = styled.div`
   display: inline-block;
   justify-content:flex-start;
 `;
+
+
 
 const SortButton = styled.button`
   padding: 10px 15px;
@@ -54,7 +56,7 @@ const SortOption = styled.li`
   }
 `;
 
-const SortComponent = ({ onSortChange }) => {
+const SortComponent = ({ onSortChange}) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false); // Toggle visibility of sort options
 
   const toggleDropdown = () => {
@@ -70,17 +72,17 @@ const SortComponent = ({ onSortChange }) => {
     <SortContainer>
       <SortButton onClick={toggleDropdown}>
         <FaSort /> Sort
-        {/* {isAscending? <FaArrowUp style={{marginLeft:'5px'}}/>:<FaArrowDown style={{marginLeft:'5px'}}/>} */}
-      </SortButton>
-      {/* {isAscending? <FaArrowUp style={{marginLeft:'5px'}}/>:<FaArrowDown style={{marginLeft:'5px'}}/>} */}
+        </SortButton>
+      
 
       {isDropdownVisible && (
         <SortOptions>
           <SortOption onClick={() => handleSortOptionClick('rating')}>By Rating</SortOption>
           <SortOption onClick={() => handleSortOptionClick('year')}>By Year</SortOption>
-          
+          <SortOption onClick={() => handleSortOptionClick('alphabetical')}>By Title</SortOption>
         </SortOptions>
       )}
+     
     </SortContainer>
   );
 };

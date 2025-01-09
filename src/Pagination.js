@@ -5,6 +5,8 @@ const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  font-weight:bold;
+  font-size:20px;
 `;
 
 const PageButton = styled.button`
@@ -42,7 +44,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <PageButton onClick={handlePrevious} disabled={currentPage === 1}>
         Previous
       </PageButton>
-      <span>{currentPage}</span>
+      <span>{currentPage} of {totalPages}</span>
       <PageButton onClick={handleNext} disabled={currentPage === totalPages}>
         Next
       </PageButton>

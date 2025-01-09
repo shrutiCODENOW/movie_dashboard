@@ -207,6 +207,8 @@ const Nav = styled.nav`
   background-color: ${(props) => props.theme.navBg};
   color: ${(props) => props.theme.navText};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin:0;
+  
 `;
 
 const Logo = styled.h1`
@@ -243,6 +245,7 @@ const NavigationBar = () => {
 
   return (
     <Nav>
+        
       <Logo>MovieApp</Logo>
       <NavLinks>
         <StyledLink to="/">Home</StyledLink>

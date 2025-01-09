@@ -145,70 +145,6 @@ const lightTheme={
   linkTextDecoration: 'none',
 }
 
-// function App() {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <ThemeProviderComponent>
-//       <ThemeProvider theme={theme}>
-//         {/* <GlobalStyles/> */}
-//       <Router>
-//         <NavigationBar/>
-//         <div>
-          
-
-//           {/* Define Routes */}
-//           <Routes>
-//             {/* Default route for Movie List */}
-//             <Route path="/" element={<MovieList />} />
-
-//             {/* Dynamic route for Movie Details */}
-//             <Route path="/movie/:id" element={<MovieDetails />} />
-//           </Routes>
-//         </div>
-//       </Router>
-//       </ThemeProvider>
-//       </ThemeProviderComponent>
-//     </QueryClientProvider>
-    
-//   );
-// }
-
-// export default App;
-
-// const darkTheme = {
-//   primary: '#1d1d1d',
-//   cardBg: '#333',
-//   text: '#fff',
-//   inputBorder: '#555',
-//   primaryHover: '#555',
-//   background: '#121212',
-//   navBg: '#1a1a1a',
-//   navText: '#fff',
-// };
-
-// function App() {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <ThemeProviderComponent>
-//         <ThemeProvider theme={theme}>
-//         <GlobalStyles />
-//         <Router>
-//           <NavigationBar />
-//           <div>
-//             <Routes>
-//               <Route path="/" element={<MovieList />} />
-//               <Route path="/movie/:id" element={<MovieDetails />} />
-//             </Routes>
-//           </div>
-//         </Router>
-//         </ThemeProvider>
-//       </ThemeProviderComponent>
-//     </QueryClientProvider>
-//   );
-// }
-
-// export default App;
-
 const darkTheme = {
   primary: '#1d1d1d',
   cardBg: '#333',
@@ -221,33 +157,6 @@ const darkTheme = {
   bodyBg:'#71797E'
 };
 
-// function ThemedApp() {
-//   const { theme } = useTheme(); // Use the current theme from context
-
-//   return (
-//     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-//       <Router>
-//         <NavigationBar />
-//         <Routes>
-//           <Route path="/" element={<MovieList />} />
-//           <Route path="/movie/:id" element={<MovieDetails />} />
-//         </Routes>
-//       </Router>
-//     </ThemeProvider>
-//   );
-// }
-
-// function App() {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <ThemeProviderComponent>
-//         <ThemedApp />
-//       </ThemeProviderComponent>
-//     </QueryClientProvider>
-//   );
-// }
-
-// export default App;
 function App() {
   const [theme, setTheme] = useState('light'); // State for theme
 
