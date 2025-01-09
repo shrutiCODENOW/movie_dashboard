@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { fetchMovieDetails } from './MovieApi';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 
@@ -55,6 +55,44 @@ const BackButton = styled.button`
   }
 `;
 
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: ${(props) => props.theme.background};
+`;
+
+const LoadingText = styled.p`
+  font-size: 18px;
+  color: ${(props) => props.theme.text};
+`;
+
+const NoMoviesFound = styled.div`
+  text-align: center;
+  margin-top: 50px;
+  font-size: 20px;
+  color: ${(props) => props.theme.text};
+`;
+const Spinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 123, 255, 0.2); /* Light blue */
+  border-top: 5px solid rgba(0, 123, 255, 1); /* Darker blue */
+  border-radius: 50%;
+  animation: ${spin} 1s linear infinite;
+  margin-bottom: 20px;
+`;
+
 
 const MovieDetails = () => {
   const { id } = useParams(); // Get movie ID from URL params
@@ -67,7 +105,8 @@ const MovieDetails = () => {
   });
 
   // Loading and error handling
-  if (isLoading) return <div>Loading...</div>;
+//   if (isLoading) return <div>Loading...</div>;
+if (isLoading) return(<LoadingContainer><Spinner /><LoadingText>Loading...</LoadingText></LoadingContainer>);
   if (error) return <div>Error loading movie details!</div>;
   if (!data) return <div>No details available!</div>;
 

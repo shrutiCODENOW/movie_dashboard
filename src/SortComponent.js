@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaSort } from 'react-icons/fa';  // Sorting icon
+import { FaSort, FaArrowUp, FaArrowDown } from 'react-icons/fa';  // Sorting icon
 import styled from 'styled-components';
 
 const SortContainer = styled.div`
@@ -70,7 +70,9 @@ const SortComponent = ({ onSortChange }) => {
     <SortContainer>
       <SortButton onClick={toggleDropdown}>
         <FaSort /> Sort
+        {/* {isAscending? <FaArrowUp style={{marginLeft:'5px'}}/>:<FaArrowDown style={{marginLeft:'5px'}}/>} */}
       </SortButton>
+      {/* {isAscending? <FaArrowUp style={{marginLeft:'5px'}}/>:<FaArrowDown style={{marginLeft:'5px'}}/>} */}
 
       {isDropdownVisible && (
         <SortOptions>
