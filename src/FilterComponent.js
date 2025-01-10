@@ -238,7 +238,7 @@ const FilterContainer = styled.div`
   display: flex;
   position:absolute;
   top:145px;
-  left:510px;
+  left:540px;
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;

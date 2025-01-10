@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaSort} from 'react-icons/fa';  // Sorting icon
+import { FaSort, FaArrowUp, FaArrowDown} from 'react-icons/fa';  // Sorting icon
 import styled from 'styled-components';
 
 const SortContainer = styled.div`
@@ -9,6 +9,27 @@ const SortContainer = styled.div`
   display:flex;
   display: inline-block;
   justify-content:flex-start;
+`;
+
+const ToggleOrderButton = styled.button`
+  padding: 10px;
+  height: 40px;
+  background-color: ${(props) => props.theme.primary};
+  color: white;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position:absolute;
+  top:2px;
+  left:85px;
+  height:35px;
+
+  &:hover {
+    background-color: ${(props) => props.theme.primaryHover};
+  }
 `;
 
 
@@ -56,7 +77,7 @@ const SortOption = styled.li`
   }
 `;
 
-const SortComponent = ({ onSortChange}) => {
+const SortComponent = ({ onSortChange,  isAscending, onToggleOrder}) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false); // Toggle visibility of sort options
 
   const toggleDropdown = () => {
@@ -82,6 +103,10 @@ const SortComponent = ({ onSortChange}) => {
           <SortOption onClick={() => handleSortOptionClick('alphabetical')}>By Title</SortOption>
         </SortOptions>
       )}
+
+      <ToggleOrderButton onClick={onToggleOrder}>
+        {isAscending?<FaArrowUp/>:<FaArrowDown/>}
+      </ToggleOrderButton>
      
     </SortContainer>
   );

@@ -204,12 +204,23 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
+    // padding:0px 0px;
   background-color: ${(props) => props.theme.navBg};
   color: ${(props) => props.theme.navText};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin:0;
+  //justify-content:flex-end;
+  //height:60px;
+  //z-index:1000;
+  //position:fixed;
+
+  .section1{
+    width:25%;
+    background-colour:'#E38E49';
+  }
   
 `;
+
 
 const Logo = styled.h1`
   font-size: 24px;
@@ -245,8 +256,9 @@ const NavigationBar = () => {
 
   return (
     <Nav>
-        
+       
       <Logo>MovieApp</Logo>
+     
       <NavLinks>
         <StyledLink to="/">Home</StyledLink>
         <StyledLink to="/favorites">Favorites</StyledLink>

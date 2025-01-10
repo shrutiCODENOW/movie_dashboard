@@ -141,7 +141,8 @@ const lightTheme={
   background:"#f4f4f4",
   navBg:"#283747 ",
   navText:"white",
-  bodyBg:"#ffffff",
+  // bodyBg:"#ffffff",
+  bodyBg:"#F2F2F2",
   linkTextDecoration: 'none',
 }
 

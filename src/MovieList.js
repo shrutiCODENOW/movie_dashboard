@@ -969,9 +969,9 @@ const Container = styled.div`
 const MovieGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 30px;
+  gap: 25px;
    padding:20px;
-   position:relative;
+  // position:relative;
   text-decoration:none;
   
 `;
@@ -983,14 +983,15 @@ const MovieCard = styled.div`
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
   text-align: center;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s;
+  //display:flex;
   
 
-//   &:hover{
-//     transform.scale(4.05);
-//     text-decoration:none;
-//     box-shadow:0 8px 12px rgba(0,123,255,0.4);
-//   }
+  &:hover{
+    transform:scale(1.2);
+    text-decoration:none;
+    box-shadow:0 8px 12px rgba(0,125,255,0.4);
+  }
   
 
   img {
@@ -1000,11 +1001,13 @@ const MovieCard = styled.div`
     border-radius: 5px;
   }
 
-   &:hover{
-    transform.scale(1.05);
-    text-decoration:none;
-    box-shadow:0 8px 12px rgba(0,123,255,0.4);
-  }
+ 
+
+//    &:hover{
+//     transform.scale(1.05);
+//     text-decoration:none;
+//     box-shadow:0 8px 12px rgba(0,123,255,0.4);
+//   }
   
 `;
 
@@ -1066,21 +1069,33 @@ const randomKeywords = ['action', 'love', 'war', 'comedy', 'drama', 'horror'];
         });
 
         // Sort by criteria
+        // filtered.sort((a, b) => {
+        //   if (sortCriteria === 'rating') {
+        //     return parseFloat(b.imdbRating || 0) - parseFloat(a.imdbRating || 0); // Sort by rating
+        //   } else if (sortCriteria === 'year') {
+        //     return parseInt(b.Year) - parseInt(a.Year); // Sort by year
+        //   } else if (sortCriteria === 'alphabetical') {
+        //     return a.Title.localeCompare(b.Title); // Sort alphabetically
+        //   }
+        //   return 0;
+        // });
+
         filtered.sort((a, b) => {
-          if (sortCriteria === 'rating') {
-            return parseFloat(b.imdbRating || 0) - parseFloat(a.imdbRating || 0); // Sort by rating
-          } else if (sortCriteria === 'year') {
-            return parseInt(b.Year) - parseInt(a.Year); // Sort by year
-          } else if (sortCriteria === 'alphabetical') {
-            return a.Title.localeCompare(b.Title); // Sort alphabetically
-          }
-          return 0;
-        });
+            const multiplier= isAscending?1:-1;
+            if (sortCriteria === 'rating') {
+              return multiplier*(parseFloat(b.imdbRating || 0) - parseFloat(a.imdbRating || 0)); // Sort by rating
+            } else if (sortCriteria === 'year') {
+              return multiplier*(parseInt(b.Year) - parseInt(a.Year)); // Sort by year
+            } else if (sortCriteria === 'alphabetical') {
+              return multiplier*(a.Title.localeCompare(b.Title)); // Sort alphabetically
+            }
+            return 0;
+          });
 
         setFilteredMovies(filtered);
       });
     }
-  }, [data, selectedGenre, sortCriteria]);
+  }, [data, selectedGenre, sortCriteria, isAscending]);
 
   const handleSearch = () => {
     dispatch(setQuery(searchQuery || 'random'));
@@ -1116,10 +1131,10 @@ if (!data?.Search) return <NoMoviesFound>NO MOVIES FOUND.</NoMoviesFound>;
       <Filter selectedGenre={selectedGenre} onGenreChange={handleGenreChange} />
 
       {/* Sorting */}
-      <SortComponent onSortChange={handleSortChange}  />
-      {/* <SortComponent onSortChange={handleSortChange} 
+      {/* <SortComponent onSortChange={handleSortChange}  /> */}
+      <SortComponent onSortChange={handleSortChange} 
       isAscending={isAscending} 
-      onToggleOrder={toggleSortOrder} /> */}
+      onToggleOrder={toggleSortOrder} />
 
       
 
@@ -1128,9 +1143,9 @@ if (!data?.Search) return <NoMoviesFound>NO MOVIES FOUND.</NoMoviesFound>;
         {filteredMovies.map((movie) => (
           <Link to={`/movie/${movie.imdbID}`} key={movie.imdbID} style={{textDecoration:'none'}}>
             <MovieCard>
-              <img src={movie.Poster} alt={movie.Title} />
+              <img src={movie.Poster} alt={movie.Title} /> 
               <h3>{movie.Title}</h3>
-              <p>{movie.Year}</p>
+              {/* <p>{movie.Year}</p> */}
               {/* <p>IMDb Rating: {movie.imdbRating || 'N/A'}</p> */}
               {/* <p>Genre: {movie.Genre}</p> */}
               <p>{sortCriteria === 'rating' ? `Rating: ${movie.imdbRating}` : `Year: ${movie.Year}`}</p>
